@@ -19,6 +19,27 @@ const toolbar = [
   { command: 'justifyRight', label: 'Align right', icon: AlignRight },
 ];
 
+function groupSubcategories(subcategories) {
+  const groups = [];
+  subcategories.forEach((subcategory) => {
+    const separatorIndex = subcategory.indexOf(' / ');
+    if (separatorIndex === -1) {
+      groups.push({ name: subcategory, value: subcategory, items: null });
+      return;
+    }
+
+    const groupName = subcategory.slice(0, separatorIndex);
+    const item = { name: subcategory.slice(separatorIndex + 3), value: subcategory };
+    let group = groups.find((entry) => entry.name === groupName && entry.items);
+    if (!group) {
+      group = { name: groupName, value: null, items: [] };
+      groups.push(group);
+    }
+    group.items.push(item);
+  });
+  return groups;
+}
+
 export default function ComposeEmail() {
   const { recipients, categories, history, setHistory, scheduled, setScheduled, templates, drafts, setDrafts, composeTemplate, setComposeTemplate, notify, user } = useApp();
   const [selected, setSelected] = useState([]);
@@ -135,20 +156,44 @@ export default function ComposeEmail() {
           <div className="recipient-groups">
             {categories.map((category) => {
               const groupPeople = visibleRecipients.filter((person) => person.category === category.name);
+              const categoryPeople = recipients.filter((person) => person.category === category.name);
+              const subcategoryGroups = groupSubcategories(category.subcategories);
               const expandedGroup = expanded[category.id] ?? true;
+              const allCategoryPeopleSelected = categoryPeople.length > 0 && categoryPeople.every((person) => selected.includes(person.id));
+              const someCategoryPeopleSelected = categoryPeople.some((person) => selected.includes(person.id));
               return (
                 <div className="recipient-group" key={category.id}>
-                  <button className="recipient-group-heading" onClick={() => setExpanded((current) => ({ ...current, [category.id]: !expandedGroup }))}>
-                    {expandedGroup ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-                    <span>{category.name}</span><small>{groupPeople.length}</small>
-                  </button>
-                  {expandedGroup && category.subcategories.map((subcategory) => {
-                    const people = groupPeople.filter((person) => person.subcategory === subcategory);
-                    if (!people.length) return null;
-                    const allChecked = people.every((person) => selected.includes(person.id));
-                    return <div className="recipient-subgroup" key={subcategory}>
-                      <label className="checkbox-label subgroup-check"><input type="checkbox" checked={allChecked} onChange={() => togglePeople(people)} />{subcategory}<span>{people.length}</span></label>
-                      {people.map((person) => <label className="recipient-person checkbox-label" key={person.id}><input type="checkbox" checked={selected.includes(person.id)} onChange={() => togglePerson(person.id)} /><span><strong>{person.name}</strong><small>{person.email}</small></span></label>)}
+                  <div className="recipient-group-heading">
+                    <button className="recipient-group-toggle" aria-label={`${expandedGroup ? 'Collapse' : 'Expand'} ${category.name}`} onClick={() => setExpanded((current) => ({ ...current, [category.id]: !expandedGroup }))}>
+                      {expandedGroup ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                    </button>
+                    <label className="checkbox-label group-check"><input type="checkbox" checked={allCategoryPeopleSelected} disabled={!categoryPeople.length} ref={(element) => { if (element) element.indeterminate = someCategoryPeopleSelected && !allCategoryPeopleSelected; }} onChange={() => togglePeople(categoryPeople)} />All {category.name}</label>
+                    <small>{groupPeople.length}</small>
+                  </div>
+                  {expandedGroup && subcategoryGroups.map((subcategoryGroup) => {
+                    if (!subcategoryGroup.items) {
+                      const people = groupPeople.filter((person) => person.subcategory === subcategoryGroup.value);
+                      const allChecked = people.length > 0 && people.every((person) => selected.includes(person.id));
+                      return <div className="recipient-subgroup" key={subcategoryGroup.value}>
+                        <label className="checkbox-label subgroup-check"><input type="checkbox" checked={allChecked} disabled={!people.length} onChange={() => togglePeople(people)} />{subcategoryGroup.name}<span>{people.length}</span></label>
+                        {people.map((person) => <label className="recipient-person checkbox-label" key={person.id}><input type="checkbox" checked={selected.includes(person.id)} onChange={() => togglePerson(person.id)} /><span><strong>{person.name}</strong><small>{person.email}</small></span></label>)}
+                      </div>;
+                    }
+
+                    const itemValues = new Set(subcategoryGroup.items.map((item) => item.value));
+                    const groupMembers = groupPeople.filter((person) => itemValues.has(person.subcategory));
+                    const allChecked = groupMembers.length > 0 && groupMembers.every((person) => selected.includes(person.id));
+                    const someChecked = groupMembers.some((person) => selected.includes(person.id));
+                    return <div className="recipient-program-group" key={subcategoryGroup.name}>
+                      <label className="checkbox-label subgroup-check"><input type="checkbox" checked={allChecked} disabled={!groupMembers.length} ref={(element) => { if (element) element.indeterminate = someChecked && !allChecked; }} onChange={() => togglePeople(groupMembers)} />{subcategoryGroup.name}<span>{groupMembers.length}</span></label>
+                      <div className="recipient-program-codes">{subcategoryGroup.items.map((item) => {
+                        const people = groupPeople.filter((person) => person.subcategory === item.value);
+                        const itemChecked = people.length > 0 && people.every((person) => selected.includes(person.id));
+                        return <div className="recipient-subgroup" key={item.value}>
+                          <label className="checkbox-label subgroup-check"><input type="checkbox" checked={itemChecked} disabled={!people.length} onChange={() => togglePeople(people)} />{item.name}<span>{people.length}</span></label>
+                          {people.map((person) => <label className="recipient-person checkbox-label" key={person.id}><input type="checkbox" checked={selected.includes(person.id)} onChange={() => togglePerson(person.id)} /><span><strong>{person.name}</strong><small>{person.email}</small></span></label>)}
+                        </div>;
+                      })}</div>
                     </div>;
                   })}
                 </div>

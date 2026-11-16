@@ -1,7 +1,7 @@
 export const initialCategories = [
   { id: 'cat-staff', name: 'Staff', subcategories: ['Administrative Staff', 'Non-Academic Staff', 'Office Staff'] },
-  { id: 'cat-lecturers', name: 'Lecturers', subcategories: ['Senior Lecturers', 'Lecturers', 'Temporary Lecturers', 'Visiting Lecturers'] },
-  { id: 'cat-students', name: 'Students', subcategories: ['BA Students', 'BBA Students', 'Diploma Students', 'Certificate Students'] },
+  { id: 'cat-lecturers', name: 'Lecturers', subcategories: ['Senior Professors', 'Professors', 'Senior Lecturers', 'Lecturers', 'Degree Program Lecturers / BA', 'Degree Program Lecturers / BBA', 'Diploma Program Lecturers / DMD', 'Diploma Program Lecturers / DLIB', 'Diploma Program Lecturers / HDECCPD', 'Diploma Program Lecturers / DLT', 'Diploma Program Lecturers / DCE', 'Certificate Program Lecturers / CCBT', 'Certificate Program Lecturers / ACLH', 'Temporary Lecturers', 'Visiting Lecturers'] },
+  { id: 'cat-students', name: 'Students', subcategories: ['Old Syllabus BA Students', 'New Syllabus BA Students', 'BBA Students', 'Diploma Students / DMD', 'Diploma Students / DLIB', 'Diploma Students / HDECCPD', 'Diploma Students / DLT', 'Diploma Students / DCE', 'Certificate Students / CCBT', 'Certificate Students / ACLH'] },
 ];
 
 export const initialRecipients = [
@@ -11,12 +11,29 @@ export const initialRecipients = [
   { id: 4, name: 'Prof. S. Abeyratne', email: 's.abeyratne@pdn.ac.lk', category: 'Lecturers', subcategory: 'Senior Lecturers', department: 'Management Studies', status: 'Active' },
   { id: 5, name: 'Dr. Tharindu Jayawardena', email: 'tharindu.j@pdn.ac.lk', category: 'Lecturers', subcategory: 'Lecturers', department: 'Humanities', status: 'Active' },
   { id: 6, name: 'Ms. Amaya Silva', email: 'amaya.silva@pdn.ac.lk', category: 'Lecturers', subcategory: 'Temporary Lecturers', department: 'Social Sciences', status: 'Active' },
-  { id: 7, name: 'Mr. Kavindu Rajapaksha', email: 'kavindu.r@students.pdn.ac.lk', category: 'Students', subcategory: 'BA Students', department: 'Arts', status: 'Active' },
+  { id: 7, name: 'Mr. Kavindu Rajapaksha', email: 'kavindu.r@students.pdn.ac.lk', category: 'Students', subcategory: 'Old Syllabus BA Students', department: 'Arts', status: 'Active' },
   { id: 8, name: 'Ms. Senuri Wickramasinghe', email: 'senuri.w@students.pdn.ac.lk', category: 'Students', subcategory: 'BBA Students', department: 'Business', status: 'Active' },
-  { id: 9, name: 'Mr. Ashen Bandara', email: 'ashen.b@students.pdn.ac.lk', category: 'Students', subcategory: 'Diploma Students', department: 'CDCE', status: 'Active' },
-  { id: 10, name: 'Ms. Piumi Gunawardena', email: 'piumi.g@students.pdn.ac.lk', category: 'Students', subcategory: 'Certificate Students', department: 'CDCE', status: 'Inactive' },
+  { id: 9, name: 'Mr. Ashen Bandara', email: 'ashen.b@students.pdn.ac.lk', category: 'Students', subcategory: 'Diploma Students / DMD', department: 'CDCE', status: 'Active' },
+  { id: 10, name: 'Ms. Piumi Gunawardena', email: 'piumi.g@students.pdn.ac.lk', category: 'Students', subcategory: 'Certificate Students / CCBT', department: 'CDCE', status: 'Inactive' },
   { id: 11, name: 'Dr. Ruwan Dissanayake', email: 'ruwan.d@pdn.ac.lk', category: 'Lecturers', subcategory: 'Visiting Lecturers', department: 'Languages', status: 'Active' },
   { id: 12, name: 'Mrs. Shalini Karunaratne', email: 'shalini.k@pdn.ac.lk', category: 'Staff', subcategory: 'Administrative Staff', department: 'Student Services', status: 'Active' },
+  { id: 13, name: 'Demo Senior Professor', email: 'demo.senior.professor@example.com', category: 'Lecturers', subcategory: 'Senior Professors', department: 'CDCE', status: 'Active' },
+  { id: 14, name: 'Demo Professor', email: 'demo.professor@example.com', category: 'Lecturers', subcategory: 'Professors', department: 'CDCE', status: 'Active' },
+  { id: 15, name: 'Demo New Syllabus BA Student', email: 'demo.new.ba.student@example.com', category: 'Students', subcategory: 'New Syllabus BA Students', department: 'Arts', status: 'Active' },
+  { id: 16, name: 'Demo Degree Program Lecturer - BA', email: 'demo.degree.ba@example.com', category: 'Lecturers', subcategory: 'Degree Program Lecturers / BA', department: 'CDCE', status: 'Active' },
+  { id: 17, name: 'Demo Diploma Program Lecturer - DMD', email: 'demo.diploma.dmd@example.com', category: 'Lecturers', subcategory: 'Diploma Program Lecturers / DMD', department: 'CDCE', status: 'Active' },
+  { id: 18, name: 'Demo Certificate Program Lecturer - CCBT', email: 'demo.certificate.ccbt@example.com', category: 'Lecturers', subcategory: 'Certificate Program Lecturers / CCBT', department: 'CDCE', status: 'Active' },
+  { id: 19, name: 'Demo Degree Program Lecturer - BBA', email: 'demo.degree.bba@example.com', category: 'Lecturers', subcategory: 'Degree Program Lecturers / BBA', department: 'CDCE', status: 'Active' },
+  { id: 20, name: 'Demo Diploma Program Lecturer - DLIB', email: 'demo.diploma.dlib@example.com', category: 'Lecturers', subcategory: 'Diploma Program Lecturers / DLIB', department: 'CDCE', status: 'Active' },
+  { id: 21, name: 'Demo Diploma Program Lecturer - HDECCPD', email: 'demo.diploma.hdeccpd@example.com', category: 'Lecturers', subcategory: 'Diploma Program Lecturers / HDECCPD', department: 'CDCE', status: 'Active' },
+  { id: 22, name: 'Demo Diploma Program Lecturer - DLT', email: 'demo.diploma.dlt@example.com', category: 'Lecturers', subcategory: 'Diploma Program Lecturers / DLT', department: 'CDCE', status: 'Active' },
+  { id: 23, name: 'Demo Diploma Program Lecturer - DCE', email: 'demo.diploma.dce@example.com', category: 'Lecturers', subcategory: 'Diploma Program Lecturers / DCE', department: 'CDCE', status: 'Active' },
+  { id: 24, name: 'Demo Certificate Program Lecturer - ACLH', email: 'demo.certificate.aclh@example.com', category: 'Lecturers', subcategory: 'Certificate Program Lecturers / ACLH', department: 'CDCE', status: 'Active' },
+  { id: 25, name: 'Demo Diploma Student - DLIB', email: 'demo.diploma.student.dlib@example.com', category: 'Students', subcategory: 'Diploma Students / DLIB', department: 'CDCE', status: 'Active' },
+  { id: 26, name: 'Demo Diploma Student - HDECCPD', email: 'demo.diploma.student.hdeccpd@example.com', category: 'Students', subcategory: 'Diploma Students / HDECCPD', department: 'CDCE', status: 'Active' },
+  { id: 27, name: 'Demo Diploma Student - DLT', email: 'demo.diploma.student.dlt@example.com', category: 'Students', subcategory: 'Diploma Students / DLT', department: 'CDCE', status: 'Active' },
+  { id: 28, name: 'Demo Diploma Student - DCE', email: 'demo.diploma.student.dce@example.com', category: 'Students', subcategory: 'Diploma Students / DCE', department: 'CDCE', status: 'Active' },
+  { id: 29, name: 'Demo Certificate Student - ACLH', email: 'demo.certificate.student.aclh@example.com', category: 'Students', subcategory: 'Certificate Students / ACLH', department: 'CDCE', status: 'Active' },
 ];
 
 export const initialRoles = [
