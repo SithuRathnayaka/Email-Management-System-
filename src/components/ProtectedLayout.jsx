@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   BarChart3, CalendarClock, ChevronLeft, ChevronRight, FileClock, FileText,
   LayoutDashboard, LogOut, Mail, Menu, Settings, Shield, Tags, Users, X,
@@ -25,6 +25,7 @@ export default function ProtectedLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
 
   const logout = () => {
@@ -74,7 +75,7 @@ export default function ProtectedLayout() {
             <div className="topbar-profile"><span className="avatar">{user?.name?.split(' ').map((word) => word[0]).slice(0, 2).join('')}</span><span className="profile-name">{user?.name}</span></div>
           </div>
         </header>
-        <main className="page-content"><Outlet /></main>
+        <main className={`page-content ${location.pathname === '/dashboard' ? 'dashboard-page-content' : ''}`}><Outlet /></main>
       </div>
       {toast && <div className={`toast toast-${toast.type}`} role="status">{toast.message}</div>}
     </div>
